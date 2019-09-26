@@ -3,19 +3,68 @@ import Foundation
 // Find the most frequently occurring character in a given string
 
 func mostFrequentlyOccurringChar(in str: String) -> Character {
-    return "a"
+    
+    var dict = [Character: Int]()
+    
+    for char in str {
+        if let counter = dict[char] {
+            dict[char] = counter + 1
+        } else {
+            dict[char] = 1
+        }
+    }
+    
+    let sortedDictArr = dict.sorted{$0.value > $1.value}
+    return sortedDictArr[0].key
 }
 
 // Find the first indicies whose values sum to a given number
 
 func pairSum(arr: [Int], target: Int) -> (Int, Int) {
-    return (0, 0)
+    var dict = [Int: Int]()
+
+    for num in arr {
+        if let _ = dict[num] {
+            continue
+        } else {
+            dict[num] = target - num
+        }
+    }
+
+    let arrOfValues = Array(dict.values)
+
+    var indexArr = [Int]()
+
+    for (index, numX) in arr.enumerated() {
+        for numY in arrOfValues where numX == numY {
+            indexArr.append(index)
+        }
+    }
+
+
+
+    return (indexArr[0], indexArr[1])
 }
+
+
+
 
 // Find the second most frequently occurring character in a given string
 
 func secondMostFrequentlyOccurringChar(in str: String) -> Character {
-    return "b"
+        
+        var dict = [Character: Int]()
+        
+        for char in str {
+            if let counter = dict[char] {
+                dict[char] = counter + 1
+            } else {
+                dict[char] = 1
+            }
+        }
+        
+        let sortedDictArr = dict.sorted{$0.value > $1.value}
+        return sortedDictArr[1].key
 }
 
 // https://leetcode.com/problems/ransom-note/
@@ -48,6 +97,20 @@ func uniqueValues(in arr: [String]) -> [String] {
 // Sort a given array by how often each term appears
 
 func sortByFrequency(arr: [Int]) -> [Int] {
-    return []
+    var dict = [Int: Int]()
+    
+    for num in arr {
+        if let counter = dict[num] {
+            dict[num] = counter + 1
+        } else {
+            dict[num] = 1
+        }
+    }
+    
+    let sortedDictArr = dict.sorted{$0.value > $1.value}
+
+    return sortByFrequency(arr: [sortedDictArr[0].key])
+    
+    
 }
 
